@@ -22,7 +22,7 @@ is.numeric(read_below1b$level_below1b) #checking whether it's correctly transfor
 
 ## CLEANING AND PREPARING THE DATA ON LEVEL 1B SCORE
 
-read_1b <- read.csv("Reading Level 1.csv")
+read_1b <- read.csv("Reading Level 1B.csv")
 colnames(read_1b)[colnames(read_1b) == "X2015..YR2015."] <- "level_1b"  #renaming the column
 read_1b <- read_1b[,c("Country.Name","level_1b")] 
 read_1b <- filter(read_1b, Country.Name != "") #excluding the rows which have blank country name data
