@@ -155,5 +155,15 @@ read_vn$level <- as.numeric(read_vn$level)
 # Creating Pyramid Chart
 ggplot(data=read_vn) + geom_bar(aes(level,percent), stat = "identity") + geom_bar(aes(level,-percent), stat = "identity") + scale_y_continuous(breaks=seq(-50,50,25),labels=abs(seq(-50,50,25)))+ scale_x_continuous(breaks=seq(1,6,by=1)) + coord_flip() + labs(title="INDONESIA")
 
+## COMPARING INDONESIA AND VIETNAM
+read_ind_vn <- rbind(read_ind, read_vn)
+ggplot(data=read_ind_vn) + geom_bar(aes(level,percent,group=Country.Name,fill=Country.Name), stat = "identity",subset(read_ind_vn,read_ind_vn$Country.Name=="Indonesia")) + geom_bar(aes(level,-percent,group=Country.Name,fill=Country.Name), stat = "identity",subset(read_ind_vn,read_ind_vn$Country.Name=="Vietnam")) + scale_y_continuous(breaks=seq(-50,50,25),labels=abs(seq(-50,50,25)))+ scale_x_continuous(breaks=seq(1,6,by=1)) + coord_flip() + labs(title="Comparison of Share of Population By Score Level Between Indonesia and Vietnam")
 
+## COMPARING INDONESIA AND OECD
+read_OECD <- data.frame("Country.Name" = "OECD","level_1" = mean(read$level_1), "level_2" = mean(read$level_2), "level_3" = mean(read$level_3),"level_4" = mean(read$level_4),"level_5" = mean(read$level_5),"level_6" = mean(read$level_6))
+read_OECD <- reshape(read_OECD,varying=c("level_1","level_2","level_3","level_4","level_5","level_6"),direction="long",idvar="Country.Name",sep="_")
+colnames(read_OECD)[colnames(read_OECD) == "level"] <- "percent"
+colnames(read_OECD)[colnames(read_OECD) == "time"] <- "level"
 
+read_ind_oecd <- rbind(read_ind,read_OECD)
+ggplot(data=read_ind_oecd) + geom_bar(aes(level,percent,group=Country.Name,fill=Country.Name), stat = "identity",subset(read_ind_oecd,read_ind_oecd$Country.Name=="Indonesia")) + geom_bar(aes(level,-percent,group=Country.Name,fill=Country.Name), stat = "identity",subset(read_ind_oecd,read_ind_oecd$Country.Name=="OECD")) + scale_y_continuous(breaks=seq(-50,50,25),labels=abs(seq(-50,50,25)))+ scale_x_continuous(breaks=seq(1,6,by=1)) + coord_flip() + labs(title="Comparison of Share of Population By Score Level Between Indonesia and OECD Countries")
