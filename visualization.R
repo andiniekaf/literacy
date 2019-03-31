@@ -1,5 +1,5 @@
 ## SETTING A WORKING DIRECTORY
-setwd("*your working directory here")
+setwd("your working directory here")
 
 ## LOADING THE NECESSARY PACKAGES
 library(dplyr)
